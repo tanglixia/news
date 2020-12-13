@@ -177,7 +177,10 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         console.log(res);
       });
 
-    } } };exports.default = _default;
+    },
+    tab: function tab(_ref) {
+      // console.log('index',data,'index',index)
+      var data = _ref.data,index = _ref.index;} } };exports.default = _default;
 
 /***/ })
 ],[[11,"common/runtime","common/vendor"]]]);

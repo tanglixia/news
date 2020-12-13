@@ -62,6 +62,9 @@
   color: #333;
   padding: 0 10px;
 }
+.tab .tab-scroll .tab-scroll__box .tab-scroll__item.active {
+  color: #f07373;
+}
 .tab .tab-gear {
   position: relative;
   display: -webkit-box;

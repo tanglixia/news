@@ -2,7 +2,7 @@
 	<view class="content">
 		<navbar></navbar>
 		<view>
-			<tab :list = "tabList"></tab>
+			<tab :list = "tabList" @tab="tab"></tab>
 		</view>
 		
 	</view>
@@ -35,6 +35,9 @@
 					console.log(res);
 				})
 			
+			},
+			tab({data,index}){
+				// console.log('index',data,'index',index)
 			}
 		}
 	}
