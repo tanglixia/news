@@ -8199,7 +8199,22 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var get_label = function get_label(data) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _list = __webpack_require__(/*! ./list.js */ 58);var _default =
+
+{
+  get_label: _list.get_label };exports.default = _default;
+
+/***/ }),
+
+/***/ 58:
+/*!**************************************************************!*\
+  !*** D:/gitCod/news【uniapp练习】/imooc-news/common/api/list.js ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.get_label = void 0;var get_label = function get_label(data) {
   return new Promise(function (reslove, reject) {
     uniCloud.callFunction({
       name: 'get_label',
@@ -8215,9 +8230,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       reject(err);
     });
   });
-};var _default =
-{
-  get_label: get_label };exports.default = _default;
+};exports.get_label = get_label;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 17)["default"]))
 
 /***/ })
