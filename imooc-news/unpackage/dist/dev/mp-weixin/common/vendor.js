@@ -8199,10 +8199,24 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var _list = __webpack_require__(/*! ./list.js */ 58);var _default =
+Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0; // import {get_label} from './list.js'
 
-{
-  get_label: _list.get_label };exports.default = _default;
+// export default {
+// 	get_label
+// }
+
+
+//批量导出文件
+var requireAPI = __webpack_require__(60);
+
+
+var _module = {};
+console.log(requireAPI.keys());
+requireAPI.keys().forEach(function (key, index) {
+  if (key === './index.js') return;
+  Object.assign(_module, requireAPI(key));
+});var _default =
+_module;exports.default = _default;
 
 /***/ }),
 
@@ -8214,10 +8228,33 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.get_label = void 0;var get_label = function get_label(data) {
+Object.defineProperty(exports, "__esModule", { value: true });exports.get_label = void 0;var _http = _interopRequireDefault(__webpack_require__(/*! ../http.js */ 59));function _interopRequireDefault(obj) {return obj && obj.__esModule ? obj : { default: obj };}
+
+var get_label = function get_label(data) {
+  return (0, _http.default)({
+    url: 'get_label',
+    data: data });
+
+};exports.get_label = get_label;
+
+/***/ }),
+
+/***/ 59:
+/*!**********************************************************!*\
+  !*** D:/gitCod/news【uniapp练习】/imooc-news/common/http.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(uniCloud) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = $http;function $http(options) {var
+
+  url =
+
+  options.url,data = options.data;
   return new Promise(function (reslove, reject) {
     uniCloud.callFunction({
-      name: 'get_label',
+      name: url,
       data: data }).
     then(function (res) {
       // console.log('resaa',res)
@@ -8230,8 +8267,42 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       reject(err);
     });
   });
-};exports.get_label = get_label;
+}
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/vue-cli-plugin-uni/packages/uni-cloud/dist/index.js */ 17)["default"]))
+
+/***/ }),
+
+/***/ 60:
+/*!*****************************************************************************!*\
+  !*** D:/gitCod/news【uniapp练习】/imooc-news/common/api sync nonrecursive .js$ ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+var map = {
+	"./index.js": 54,
+	"./list.js": 58
+};
+
+
+function webpackContext(req) {
+	var id = webpackContextResolve(req);
+	return __webpack_require__(id);
+}
+function webpackContextResolve(req) {
+	if(!__webpack_require__.o(map, req)) {
+		var e = new Error("Cannot find module '" + req + "'");
+		e.code = 'MODULE_NOT_FOUND';
+		throw e;
+	}
+	return map[req];
+}
+webpackContext.keys = function webpackContextKeys() {
+	return Object.keys(map);
+};
+webpackContext.resolve = webpackContextResolve;
+module.exports = webpackContext;
+webpackContext.id = 60;
 
 /***/ })
 
