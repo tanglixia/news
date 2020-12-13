@@ -1,21 +1,21 @@
 <template>
 	<view class="navbar">
-		<view class="navbar-fixed">
-			<!-- 状态栏 -->
-			
+		<view class="navbar-search">
+			<!-- 状态栏高度 -->
 			<view :style="{height:statusBarHeight+'px'}"></view>
-			<!-- 导航栏内容 -->
-			<view class="navbar-content" :style="{height:navBarHeight+'px',width:windowWidth+'px'}">
-				<view class="navbar-serach">
-					<view class="navbar-serach_icon">
+			<!-- <view style="height: 20px;"></view> -->
+			<!-- 导航栏 内容-->
+			<view class="navbar-search_content" :style="{height:navbarHeight+ 'px',width:windowWith+'px'}">
+				<view class="navbar-search_box">
+					<view class="navbar-search_icon">
+						<uni-icons type="search" size="16" color="#999"></uni-icons>
 					</view>
-					<view class="navbar-serach_text">
-						请输入内容
-					</view>
+					<view class="navbar-search_input">请输入内容</view>
 				</view>
+			
 			</view>
 		</view>
-		<view style="height: 45px;"></view>
+		<view :style="{height:statusBarHeight + navbarHeight + 'px'}"></view>
 	</view>
 </template>
 
@@ -23,26 +23,22 @@
 	export default {
 		data() {
 			return {
-				statusBarHeight:20,//默认	状态栏的高度
-				navBarHeight:45, //导航栏的默认高度
-				windowWidth:375
+				statusBarHeight: 20, //默认状态栏高度
+				navbarHeight: 45, //默认导航栏高度
+				windowWith:375 //默认宽度
 			};
 		},
 		//组件的生命周期 ，相当于页面中的onload
 		created() {
-			//获取手机系统信息
 			const info = uni.getSystemInfoSync()
 			this.statusBarHeight = info.statusBarHeight
-			this.windowWidth = info.windowWidth
-			// console.log(info);
-			
+			console.log('info', info);
 			//#ifndef H5 || APP-PLUS || MP-ALIPAY
 			//获取胶囊的位置
-			// 导航栏的高度 = (胶囊底部高度-状态栏的高度)+(胶囊顶部高度-状态栏的高度)
-			const menuButtonInfo = uni.getMenuButtonBoundingClientRect()
-			this.navBarHeight = (menuButtonInfo.bottom-this.statusBarHeight)+(menuButtonInfo.top - this.statusBarHeight)
-			this.windowWidth = menuButtonInfo.left
-			console.log('menB',menuButtonInfo);
+			const  menuButtonHeight = uni.getMenuButtonBoundingClientRect()
+			//导航栏高度 = (胶囊底部高度 - 状态栏高度)+(胶囊顶部高度 - 状态栏高度)
+			this.navbarHeight = (menuButtonHeight.bottom - this.statusBarHeight)+(menuButtonHeight.top - this.statusBarHeight)
+			this.windowWith = menuButtonHeight.left
 			//#endif
 		}
 	}
@@ -50,45 +46,42 @@
 
 <style lang="scss">
 	.navbar {
-		.navbar-fixed {
-			width: 100%;
-			background-color: $mk-base-color;
+		.navbar-search {
+			
 			position: fixed;
 			top: 0;
 			left: 0;
-			z-index: 99;
-
-			.navbar-content {
+			z-index: 2;
+			width: 100%;
+			
+			background-color: $mk-base-color;
+			.navbar-search_content {
 				display: flex;
-				align-items: center;
 				justify-content: center;
+				align-items: center;
+				// height: 45px;
 				padding: 0 15px;
-				height: 45px;
+				background-color: $mk-base-color;
 				box-sizing: border-box;
-
-				.navbar-serach {
+				.navbar-search_box {
 					display: flex;
 					align-items: center;
-					padding: 0 10px;
+					background-color: #fff;
 					height: 30px;
 					width: 100%;
 					border-radius: 30px;
-					background-color: #fff;
+					padding: 0 10px;
 
-					.navbar-serach_icon {
-						width: 10px;
-						height: 10px;
-						border: 1px solid red;
-						margin-right: 10px;
+					.navbar-search_icon {
+						margin-right: 6px;
 					}
 
-					.navbar-serach_text {
-						font-size: 12px;
-						color: #999
+					.navbar-search_input {
+						color: #999;
+						font-size: 14px;
 					}
 				}
 			}
-
 		}
 	}
 </style>

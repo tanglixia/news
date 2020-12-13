@@ -1,28 +1,41 @@
 <template>
 	<view class="content">
 		<navbar></navbar>
-		<!-- <view v-for="i in 100" >
-			{{i}}带个话
-		</view> -->
+		<view>
+			<tab :list = "tabList"></tab>
+		</view>
+		
 	</view>
 </template>
 
 <script>
-	import navbar from '../../../components/navbar/navbar.vue'
+	import navbar from '@/components/navbar/navbar.vue'
+	import tab from '@/components/tab/tab.vue'
 	export default {
 		components:{
-			navbar
+			navbar,
+			tab
 		},
 		data() {
 			return {
-				
+				tabList:[]
 			}
 		},
 		onLoad() {
-
+			this.getLabel()
 		},
 		methods: {
-
+			getLabel(){
+				// console.log(this.$api);
+			this.$api.get_label({
+					name:'get_label'
+				}).then((res)=>{
+					const {data} =res
+					this.tabList = data
+					console.log(res);
+				})
+			
+			}
 		}
 	}
 </script>
