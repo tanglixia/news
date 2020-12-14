@@ -6,3 +6,9 @@ export const get_label = (data)=>{
 		data
 	})
 }
+export const get_list = (data)=>{
+	return $http({
+		url:'get_list',
+		data
+	})
+}
