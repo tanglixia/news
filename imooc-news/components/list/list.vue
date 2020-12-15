@@ -31,7 +31,7 @@
 			return {
 				list: [],
 				listCatchData: {}, //用来保存数据
-				page:1,
+				load:{},
 				pageSize:10
 			};
 		},
@@ -47,7 +47,8 @@
 		methods: {
 			//上拉加载
 			loadMore(){
-				this.page ++ 
+				this.page ++
+				 this.load[this.currentIndex].page++
 				this.getList(this.currentIndex)
 			},
 			//swiper左右切换时事件
@@ -55,6 +56,7 @@
 				const {
 					current
 				} = e.detail
+				console.log('current',e);
 				//没有数据或者 数据长度等于0时
 				if (!this.listCatchData[current] || this.listCatchData[current].length === 0) {
 					this.getList(current)
@@ -66,10 +68,15 @@
 			},
 			//请求article卡片数据
 			getList(current) {
-
+				if(!this.load[current]){
+					this.load[current] = {
+						page:1,
+						loading:'loading'
+					}
+				}
 				this.$api.get_list({
 					name: this.tabList[current].name,
-					page:this.page,
+					page:this.load[current].page,
 					pageSize:this.pageSize
 				}).then((res) => {
 					const {

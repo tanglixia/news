@@ -52,10 +52,8 @@
 
 			},
 			// tab栏
-			tab({
-				data,
-				index
-			}) {
+			tab({data,index}) {
+				console.log('currentIndex',this.currentIndex);
 				this.currentIndex = index
 			},
 			//swiper改变的时候
