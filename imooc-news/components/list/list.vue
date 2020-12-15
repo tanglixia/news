@@ -59,7 +59,9 @@
 			getList(current) {
 
 				this.$api.get_list({
-					name: this.tabList[current].name
+					name: this.tabList[current].name,
+					page:1,
+					pageSize:5
 				}).then((res) => {
 					const {
 						data
