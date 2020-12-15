@@ -2,7 +2,7 @@
 	<view class="list">
 		<swiper class="swiper" @change="change" :current="currentIndex">
 			<swiper-item class="swiper-item" v-for="(item,index) in tabList" :key="index">
-				<list-item :list="listCatchData[index]"></list-item>
+				<list-item :list="listCatchData[index]" @loadMore="loadMore"></list-item>
 			</swiper-item>
 		</swiper>
 		
@@ -30,7 +30,9 @@
 		data() {
 			return {
 				list: [],
-				listCatchData: {} //用来保存数据
+				listCatchData: {}, //用来保存数据
+				page:1,
+				pageSize:10
 			};
 		},
 		watch: {
@@ -43,6 +45,12 @@
 		// 	this.getList(current)
 		// },
 		methods: {
+			//上拉加载
+			loadMore(){
+				this.page ++ 
+				this.getList(this.currentIndex)
+			},
+			//swiper左右切换时事件
 			change(e) {
 				const {
 					current
@@ -56,20 +64,22 @@
 				this.$emit('change', current)
 
 			},
+			//请求article卡片数据
 			getList(current) {
 
 				this.$api.get_list({
 					name: this.tabList[current].name,
-					page:1,
-					pageSize:5
+					page:this.page,
+					pageSize:this.pageSize
 				}).then((res) => {
 					const {
 						data
 					} = res
 					// this.list = data
 					console.log('listRes', res)
-					// this.listCatchData = 
-					this.$set(this.listCatchData, current, data)
+					let oldList = this.listCatchData[current] || []
+					oldList.push(...data)
+					this.$set(this.listCatchData, current, oldList)
 				})
 			}
 		}

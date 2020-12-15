@@ -3,8 +3,8 @@ const db = uniCloud.database()
 exports.main = async (event, context) => {
 	let {
 		name,
-		page = 1,
-		pageSize = 5
+		page,
+		pageSize
 	} = event
 	let matchObj = {}
 	if (name !== '全部') {

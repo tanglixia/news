@@ -1,6 +1,6 @@
 <template>
 	<view class="scroll">
-		<scroll-view class="listScroll-content" scroll-y="true">
+		<scroll-view class="listScroll-content" scroll-y="true" @scrolltolower="loadMore">
 			<view class="listScroll-box">
 				<view class="listScroll-box__item">
 					<slot></slot>
@@ -16,6 +16,12 @@
 			return {
 
 			};
+		},
+		methods:{
+			loadMore(){
+				console.log('触底加载')
+				this.$emit('loadMore')
+			}
 		}
 	}
 </script>
