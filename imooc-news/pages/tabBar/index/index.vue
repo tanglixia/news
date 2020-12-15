@@ -59,6 +59,7 @@
 			//swiper改变的时候
 			change(index) {
 				this.tabIndex = index
+				this.currentIndex = index
 			}
 		}
 	}

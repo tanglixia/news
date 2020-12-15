@@ -2,7 +2,7 @@
 	<view class="list">
 		<swiper class="swiper" @change="change" :current="currentIndex">
 			<swiper-item class="swiper-item" v-for="(item,index) in tabList" :key="index">
-				<list-item :list="listCatchData[index]" @loadMore="loadMore"></list-item>
+				<list-item :list="listCatchData[index]" :load = "load[index]" @loadMore="loadMore"></list-item>
 			</swiper-item>
 		</swiper>
 		
@@ -31,7 +31,7 @@
 			return {
 				list: [],
 				listCatchData: {}, //用来保存数据
-				load:{},
+				load:{},//初始化page
 				pageSize:10
 			};
 		},
@@ -39,6 +39,7 @@
 			tabList(newVal) {
 				if (newVal.length === 0) return
 				this.getList(this.currentIndex)
+				this.$forceUpdate()
 			}
 		},
 		// mounted() {
@@ -47,7 +48,7 @@
 		methods: {
 			//上拉加载
 			loadMore(){
-				this.page ++
+				if(this.load[this.currentIndex].loading === 'noMore') return
 				 this.load[this.currentIndex].page++
 				this.getList(this.currentIndex)
 			},
@@ -74,6 +75,7 @@
 						loading:'loading'
 					}
 				}
+				console.log('当前页数',this.load[current].page);
 				this.$api.get_list({
 					name: this.tabList[current].name,
 					page:this.load[current].page,
@@ -82,7 +84,16 @@
 					const {
 						data
 					} = res
-					// this.list = data
+					//length等于0 表示没有数据
+					if(data.length === 0) {
+						let oldLoad = {}
+						oldLoad.loading = 'noMore',
+						oldLoad.page = this.load[current].page
+						this.$set(this.load,current,oldLoad)
+						//强制渲染页面
+						this.$forceUpdate()
+						return
+					}
 					console.log('listRes', res)
 					let oldList = this.listCatchData[current] || []
 					oldList.push(...data)
