@@ -72,7 +72,8 @@
 				if(!this.load[current]){
 					this.load[current] = {
 						page:1,
-						loading:'loading'
+						loading:'loading',
+						user_id:'5fd4734f974b69000122157b'
 					}
 				}
 				console.log('当前页数',this.load[current].page);
