@@ -12,3 +12,9 @@ export const get_list = (data)=>{
 		data
 	})
 }
+export const get_like = (data)=>{
+	return $http({
+		url:'get_like',
+		data
+	})
+}

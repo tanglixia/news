@@ -1,5 +1,5 @@
 <template>
-	<view class="listcard">
+	<view class="listcard"  @click="handleCard">
 		<!-- 基础卡片 -->
 		<view v-if="item.mode === 'base'" class="listcard-base">
 			<view class="listcard-base__img">
@@ -8,6 +8,7 @@
 			<view class="listcard-base__content">
 				<view class="base-content__title">
 					<text>{{item.title}}</text>
+					<likes :items = item></likes>
 				</view>
 				<view class="base-content__des">
 					<view class="base-content__des_label">
@@ -24,6 +25,7 @@
 			<view class="listcard-base__content">
 				<view class="base-content__title">
 					<text>{{item.title}}</text>
+					<likes :items = item></likes>
 				</view>
 				<view class="listcard-base__img">
 					<view class="listcard-base__img-item" v-if="index < 3" v-for="(item,index) in item.cover" :key="index">
@@ -47,6 +49,7 @@
 			<view class="listcard-base__content">
 				<view class="base-content__title">
 					<text>{{item.title}}</text>
+					<likes :items = item></likes>
 				</view>
 				
 				<view class="base-content__des">
@@ -61,7 +64,11 @@
 </template>
 
 <script>
+	import likes from '../likes/likes.vue'
 	export default {
+		components:{
+			likes
+		},
 		props:{
 			mode:{
 				type:String,
@@ -79,8 +86,13 @@
 			return {
 
 			};
+		},
+		methods:{
+			handleCard(){
+				
+				console.log('点击卡片',this.item);
+			}
 		}
-		
 		
 	}
 </script>
@@ -126,14 +138,19 @@
 					color: #333;
 					font-weight: 400;
 					line-height: 1.2;
-
+					position: relative;
+					
 					text {
 						overflow: hidden;
 						text-overflow: ellipsis;
 						display: -webkit-box;
 						-webkit-line-clamp: 2;
 						-webkit-box-orient: vertical;
+						padding-right: 20px;
+						
+						
 					}
+					
 				}
 
 				.base-content__des {
