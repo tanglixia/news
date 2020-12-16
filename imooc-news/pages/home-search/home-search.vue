@@ -7,7 +7,7 @@
 					<view class="history">
 						搜索历史
 					</view>
-					<view class="clear">
+					<view class="clear" @click="clear">
 						清空
 					</view>
 				</view>
@@ -58,6 +58,14 @@
 			...mapState(['historyList'])
 		},
 		methods: {
+			//清空按钮
+			clear(){
+				this.$store.dispatch('clear_history')
+				uni.showToast({
+					title:'清空完成',
+					icon:'none'
+				})
+			},
 			//点击历史按钮
 			openHistroy(item){
 				this.value = item.name

@@ -9,10 +9,10 @@
 				class="navbar-search_content" 
 				:style="{height:navbarHeight+ 'px',width:windowWith+'px'}"
 				@click.stop="openSearch"
-				v-if="isSearch"
+				
 				:class="{search:isSearch}"
 				 >
-				 <view class="search-back">
+				 <view class="search-back" @click="back" v-if="isSearch">
 				 	<uni-icons type="back" size="24" color="#fff"></uni-icons>
 				 </view>
 				 <!-- 非搜索页显示 -->
@@ -72,6 +72,11 @@
 			//#endif
 		},
 		methods:{
+			back(){
+				uni.switchTab({
+					url:'/pages/tabBar/index/index'
+				})
+			},
 			openSearch(){
 				if(this.isSearch) return
 				uni.navigateTo({
