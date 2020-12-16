@@ -1,7 +1,7 @@
 <template>
 	<view class="home">
 		<navbar></navbar>
-		<tab :list="tabList" @tab="tab" :tabIndex="tabIndex"></tab>
+		<tab :list="tabList" @tab="tab" :tabIndex="tabIndex" @openTab="openTab"></tab>
 		<view class="home-list">
 			<list :tabList="tabList" @change="change" :currentIndex="currentIndex"></list>
 		</view>
@@ -60,6 +60,12 @@
 			change(index) {
 				this.tabIndex = index
 				this.currentIndex = index
+			},
+			//设置图标
+			openTab(){
+				uni.navigateTo({
+					url:'../../home-label/home-label'
+				})
 			}
 		}
 	}

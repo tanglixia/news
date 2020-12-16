@@ -12,7 +12,7 @@
 				>{{item.name}}</view>
 			</view>
 		</scroll-view>
-		<view class="tab-gear">
+		<view class="tab-gear" @click="openTab">
 			<uni-icons class="tab-gear__icon" type="gear" size="26" color="#666"></uni-icons>
 		</view>
 	</view>
@@ -48,6 +48,10 @@
 				// console.log(item,index);
 				this.activeIndex = index
 				this.$emit('tab',{data:item,index:index})
+			},
+			//设置图标
+			openTab(){
+				this.$emit('openTab')
 			}
 		}
 	}
