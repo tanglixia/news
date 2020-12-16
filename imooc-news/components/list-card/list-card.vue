@@ -1,5 +1,5 @@
 <template>
-	<view class="listcard"  @click="handleCard">
+	<view class="listcard"  @click="openCard">
 		<!-- 基础卡片 -->
 		<view v-if="item.mode === 'base'" class="listcard-base">
 			<view class="listcard-base__img">
@@ -8,7 +8,7 @@
 			<view class="listcard-base__content">
 				<view class="base-content__title">
 					<text>{{item.title}}</text>
-					<likes :items = item></likes>
+					<likes :items=item></likes>
 				</view>
 				<view class="base-content__des">
 					<view class="base-content__des_label">
@@ -49,7 +49,7 @@
 			<view class="listcard-base__content">
 				<view class="base-content__title">
 					<text>{{item.title}}</text>
-					<likes :items = item></likes>
+					<likes :items=item></likes>
 				</view>
 				
 				<view class="base-content__des">
@@ -88,9 +88,9 @@
 			};
 		},
 		methods:{
-			handleCard(){
+			openCard(){
 				
-				console.log('点击卡片',this.item);
+				this.$emit('cardList',this.item)
 			}
 		}
 		

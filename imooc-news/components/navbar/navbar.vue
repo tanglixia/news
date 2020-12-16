@@ -35,6 +35,10 @@
 <script>
 	export default {
 		props:{
+			value:{
+				type:[String,Number],
+				default:''
+			},
 			isSearch:{
 				type:Boolean,
 				default:false
@@ -47,6 +51,12 @@
 				windowWith:375, //默认宽度
 				val:''//input默认值
 			};
+		},
+		
+		watch:{
+			value(newVal){
+			this.val = newVal
+			}
 		},
 		//组件的生命周期 ，相当于页面中的onload
 		created() {
@@ -111,6 +121,7 @@
 					}
 
 					.navbar-search_input {
+						width: 100%;
 						color: #999;
 						font-size: 14px;
 					}
