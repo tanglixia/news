@@ -87,10 +87,24 @@
 
 			};
 		},
+		
 		methods:{
+			
 			openCard(){
-				
-				this.$emit('cardList',this.item)
+				let item = this.item
+				this.$emit('cardList',item)
+				console.log('card全部数据',item);
+				const parmas = {
+					_id : item._id,
+					title:item.title,
+					browse_count:item.browse_count,
+					create_time:item.create_time,
+					thumbs_up_count:item.thumbs_up_count,
+					author:item.author
+				}
+				uni.navigateTo({
+					url:'/pages/home-detail/home-detail?parmas='+JSON.stringify(parmas)
+				})
 			}
 		}
 		
