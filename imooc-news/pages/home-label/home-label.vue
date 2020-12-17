@@ -5,10 +5,14 @@
 				<text class="label-header__tags">我的标签</text>
 				<text class="label-header__edit" @click="editList">{{is_edit?'完成':'编辑'}}</text>
 			</view>
+				<uni-load-more v-if="loading" status="loading" :iconSize="iconSize" iconType="snow"></uni-load-more>
 			<view class="label-tags">
 				<view class="label-tags__item" v-for="(item,index) in labelList" :key="index">
 					{{item.name}}
 					<uni-icons v-if="is_edit" class="clear" type="clear" size="20" color="red" @click="del(index)"></uni-icons>
+				</view>
+				<view v-if="this.labelList.length === 0 && !loading" class="no-data">
+					没有数据
 				</view>
 			</view>
 		</view>
@@ -16,9 +20,13 @@
 			<view class="label-recommend__title">
 				<text>标签推荐</text>
 			</view>
+			<uni-load-more v-if="loading" status="loading" :iconSize="iconSize" iconType="snow"></uni-load-more>
 			<view class="label-recommend__box">
 				<view class="label-recommend__item" v-for="(item,index) in list" :key="index" @click="add(index)">
 					{{item.name}}
+				</view>
+				<view v-if="this.list.length === 0 && !loading" class="no-data">
+					没有数据
 				</view>
 			</view>
 		</view>
@@ -32,7 +40,9 @@
 			return {
 				is_edit: false,
 				labelList: [], //我的标签 数据
-				list: [] //标签推荐 数据
+				list: [], //标签推荐 数据
+				iconSize:20,
+				loading:true
 			}
 		},
 		created() {
@@ -60,13 +70,14 @@
 			},
 			//请求数据
 			getLabelList() {
-				
+				this.loading = true
 				this.$api.get_label({
 					type: 'all'
 
 				}).then(res => {
 					
 					console.log('homeLabel', res);
+					this.loading= false
 					//判断current  如果为true 就是我的标签，false则是标签推荐
 					const {
 						data
@@ -91,6 +102,7 @@
 						icon:'none'
 					})
 					console.log(res);
+					uni.$emit('labelChange')
 				})
 			}
 		}
@@ -187,5 +199,12 @@
 				}
 			}
 		}
+	}
+	.no-data{
+		width: 100%;
+		text-align: center;
+		padding:50px 0;
+		color: #999;
+		font-size: 14px;
 	}
 </style>

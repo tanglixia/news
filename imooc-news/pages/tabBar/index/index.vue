@@ -31,6 +31,9 @@
 			}
 		},
 		onLoad() {
+			uni.$on('labelChange',item=>{
+				this.getLabel()
+			})
 			this.getLabel()
 		},
 		methods: {
