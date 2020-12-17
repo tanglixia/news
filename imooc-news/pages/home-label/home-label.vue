@@ -3,12 +3,12 @@
 		<view class="label-content">
 			<view class="label-header">
 				<text class="label-header__tags">我的标签</text>
-				<text class="label-header__edit">编辑</text>
+				<text class="label-header__edit" @click="editList">{{is_edit?'完成':'编辑'}}</text>
 			</view>
 			<view class="label-tags">
-				<view class="label-tags__item" v-for="(item,index) in 18" :key="index">
-					{{item}}内容
-					<uni-icons class="clear" type="clear" size="20" color="red"></uni-icons>
+				<view class="label-tags__item" v-for="(item,index) in labelList" :key="index">
+					{{item.name}}
+					<uni-icons v-if="is_edit" class="clear" type="clear" size="20" color="red" @click="del(index)"></uni-icons>
 				</view>
 			</view>
 		</view>
@@ -17,8 +17,8 @@
 				<text>标签推荐</text>
 			</view>
 			<view class="label-recommend__box">
-				<view class="label-recommend__item" v-for="(item,index) in 18" :key="index">
-					{{item}}推荐
+				<view class="label-recommend__item" v-for="(item,index) in list" :key="index" @click="add(index)">
+					{{item.name}}
 				</view>
 			</view>
 		</view>
@@ -30,11 +30,40 @@
 	export default {
 		data() {
 			return {
-				
+				is_edit:false,
+				labelList:[],//我的标签 数据
+				list:[] //标签推荐 数据
 			}
 		},
+		created() {
+			this.getLabelList()
+		},
 		methods: {
-			
+			//编辑按钮
+			editList(){
+				this.is_edit = ! this.is_edit
+			},
+			//我的标签
+			del(index){
+				this.list.push(this.labelList[index])
+				this.labelList.splice(index,1)
+			},
+			add(index){
+				if(!this.is_edit) return
+				this.labelList.push(this.list[index])
+				this.list.splice(index,1)
+			},
+			getLabelList(){
+				this.$api.get_label({
+					type:'all'
+				}).then(res=>{
+					console.log('homeLabel',res);
+					//判断current  如果为true 就是我的标签，false则是标签推荐
+					const { data } = res
+					this.labelList = data.filter(item=>item.current)
+					this.list = data.filter(item=> !item.current)
+				})
+			}
 		}
 	}
 </script>
