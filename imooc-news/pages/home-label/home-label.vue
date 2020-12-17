@@ -22,7 +22,7 @@
 				</view>
 			</view>
 		</view>
-		
+
 	</view>
 </template>
 
@@ -30,9 +30,9 @@
 	export default {
 		data() {
 			return {
-				is_edit:false,
-				labelList:[],//我的标签 数据
-				list:[] //标签推荐 数据
+				is_edit: false,
+				labelList: [], //我的标签 数据
+				list: [] //标签推荐 数据
 			}
 		},
 		created() {
@@ -40,28 +40,57 @@
 		},
 		methods: {
 			//编辑按钮
-			editList(){
-				this.is_edit = ! this.is_edit
+			editList() {
+				if (this.is_edit) {
+					this.is_edit = false
+					this.updateLabel(this.labelList)
+				} else {
+					this.is_edit = true
+				}
 			},
 			//我的标签
-			del(index){
+			del(index) {
 				this.list.push(this.labelList[index])
-				this.labelList.splice(index,1)
+				this.labelList.splice(index, 1)
 			},
-			add(index){
-				if(!this.is_edit) return
+			add(index) {
+				if (!this.is_edit) return
 				this.labelList.push(this.list[index])
-				this.list.splice(index,1)
+				this.list.splice(index, 1)
 			},
-			getLabelList(){
+			//请求数据
+			getLabelList() {
+				
 				this.$api.get_label({
-					type:'all'
-				}).then(res=>{
-					console.log('homeLabel',res);
+					type: 'all'
+
+				}).then(res => {
+					
+					console.log('homeLabel', res);
 					//判断current  如果为true 就是我的标签，false则是标签推荐
-					const { data } = res
-					this.labelList = data.filter(item=>item.current)
-					this.list = data.filter(item=> !item.current)
+					const {
+						data
+					} = res
+					this.labelList = data.filter(item => item.current)
+					this.list = data.filter(item => !item.current)
+				})
+			},
+			//更新数据
+			updateLabel(label) {
+				uni.showLoading()
+				let labelArr = []
+				label.forEach(item => {
+					labelArr.push(item._id)
+				})
+				this.$api.update_label({
+					label:labelArr
+				}).then(res => {
+					uni.hideLoading()
+					uni.showToast({
+						title:'更新成功',
+						icon:'none'
+					})
+					console.log(res);
 				})
 			}
 		}
@@ -69,80 +98,92 @@
 </script>
 
 <style lang="scss">
-	page{
+	page {
 		display: flex;
 		background-color: #f4f4f4;
 	}
-	.label{
-		width:100%;
-		.label-content{
+
+	.label {
+		width: 100%;
+
+		.label-content {
 			display: flex;
 			flex-direction: column;
 			background-color: #fff;
 			box-sizing: border-box;
 			margin-bottom: 10px;
-			.label-header{
+
+			.label-header {
 				display: flex;
 				justify-content: space-between;
-				padding:10px;
+				padding: 10px;
 				border-bottom: 1px solid #f5f5f5;
-				.label-header__tags{
+
+				.label-header__tags {
 					color: #666;
 					font-size: 14px;
-					
+
 				}
-				.label-header__edit{
+
+				.label-header__edit {
 					color: #30b33a;
 					font-size: 14px;
-					
+
 				}
-				
+
 			}
-			.label-tags{
+
+			.label-tags {
 				display: flex;
 				flex-wrap: wrap;
 				padding: 10px 15px;
-				padding-top:0;
-				.label-tags__item{
+				padding-top: 0;
+
+				.label-tags__item {
 					position: relative;
 					border: 1px solid #666;
-					padding:6px 10px;
+					padding: 6px 10px;
 					color: #666;
-					margin-top:10px;
+					margin-top: 10px;
 					margin-right: 10px;
 					border-radius: 6px;
-					.clear{
+
+					.clear {
 						position: absolute;
 						right: -9px;
 						top: -8px;
 						background-color: #fff;
 					}
 				}
-				
+
 			}
 		}
-		.label-recommend{
+
+		.label-recommend {
 			background-color: #fff;
-			.label-recommend__title{
-				padding:10px;
+
+			.label-recommend__title {
+				padding: 10px;
 				color: $mk-base-color;
 				font-size: 14px;
-				
+
 				border-bottom: 1px solid #f5f5f5;
 			}
-			.label-recommend__box{
+
+			.label-recommend__box {
 				display: flex;
 				flex-wrap: wrap;
 				padding: 10px 15px;
-				padding-top:0;
-				.label-recommend__item{
+				padding-top: 0;
+
+				.label-recommend__item {
 					border: 1px solid #666;
-					padding:6px;
+					padding: 6px;
 					color: #666;
-					margin-top:10px;
+					margin-top: 10px;
 					margin-right: 10px;
 					border-radius: 6px;
-					
+
 				}
 			}
 		}
