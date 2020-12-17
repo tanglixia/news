@@ -63,7 +63,7 @@
 					
 				}
 				.label-header__edit{
-					color: #3aa74b;
+					color: #30b33a;
 					font-size: 14px;
 					
 				}
