@@ -26,19 +26,32 @@
 			</view>
 		</view>
 		<view class="detail-bottom">
-			<view class="detail-bottom__input">
+			<view class="detail-bottom__input" @click="openCommit">
 				<text>谈谈您的看法</text>
 				<uni-icons type="compose" size="22" color="#f07373"></uni-icons>
 			</view>
 			<view class="detail-bottom__icons">
-				
-					<uni-icons class="detail-bottom__icons-box" type="chat" size="22" color="#f07373"></uni-icons>
-					<uni-icons class="detail-bottom__icons-box" type="heart" size="22" color="#f07373"></uni-icons>
-					<uni-icons class="detail-bottom__icons-box" type="hand-thumbsup" size="22" color="#f07373"></uni-icons>
-				
-				
+				<uni-icons class="detail-bottom__icons-box" type="chat" size="22" color="#f07373"></uni-icons>
+				<uni-icons class="detail-bottom__icons-box" type="heart" size="22" color="#f07373"></uni-icons>
+				<uni-icons class="detail-bottom__icons-box" type="hand-thumbsup" size="22" color="#f07373"></uni-icons>
 			</view>
 		</view>
+		<uni-popup ref="popup" type="bottom" :maskClick="false">
+		    <view class="detail-popup">
+		    	<view class="detail-popup__header">
+		    		<text @click="close">取消</text>
+					<text @click="submit">发布</text>
+		    	</view>
+				<view class="detail-popup__content">
+					
+						<textarea class="popup__content-textarea" maxlength="200" v-model="popupCommit" fixed placeholder="请输入评论内容" />
+					
+					<view class="popup__content-count">
+						{{popupCommit.length}} /200
+					</view>
+				</view>
+		    </view>
+		</uni-popup>
 	</view>
 </template>
 
@@ -51,7 +64,8 @@
 		data() {
 			return {
 				detailData:{},
-				noData:"<p style='font-size:14px;color:#999;text-align:center;'>数据正在加载中......</p>"
+				noData:"<p style='font-size:14px;color:#999;text-align:center;'>数据正在加载中......</p>",
+				popupCommit:''
 			}
 		},
 		onLoad(query) {
@@ -60,6 +74,18 @@
 			this.getDetail()
 		},
 		methods: {
+			//点击底部输入框 
+			openCommit(){
+				this.$refs.popup.open()
+			},
+			//取消按钮
+			close(){
+				this.$refs.popup.close()
+			},
+			//发布按钮
+			submit(){
+				this.$refs.popup.close()
+			},
 			getDetail(){
 				this.$api.get_detail({
 					article_id:this.detailData._id
@@ -168,6 +194,34 @@
 					justify-content: center;
 					width: 40px;
 					
+				}
+			}
+		}
+		.detail-popup{
+			background-color: #FFFFFF;
+			.detail-popup__header{
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				padding:15px;
+				border-bottom: 1px solid #f5f5f5;
+				color: #333;
+				font-size: 14px;
+			}
+			.detail-popup__content{
+				display: flex;
+				flex-direction: column;
+				justify-content: space-between;
+				padding:15px;
+				.popup__content-textarea{
+					width: 100%;
+					font-size: 14px;
+					color: #333;
+				}
+				.popup__content-count{
+					display: flex;
+					justify-content: flex-end; 
+					color: #999;
 				}
 			}
 		}
