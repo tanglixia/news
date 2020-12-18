@@ -21,7 +21,9 @@
 			</view>
 		</view>
 		<view class="detail-content">
-			xxxxxxxxxxxxxxxx
+			<view class="detail-content__item">
+				<u-parse :content="detailData.content" :noData="noData" />
+			</view>
 		</view>
 		<view class="detail-bottom">
 			<view class="detail-bottom__input">
@@ -41,20 +43,31 @@
 </template>
 
 <script>
+	import uParse from '@/components/gaoyia-parse/parse.vue'
 	export default {
+		components:{
+			uParse
+		},
 		data() {
 			return {
-				detailData:{}
+				detailData:{},
+				noData:"<p style='font-size:14px;color:#999;text-align:center;'>数据正在加载中......</p>"
 			}
 		},
 		onLoad(query) {
-			console.log(query);
 			//将字符串转成对象
 			this.detailData = JSON.parse(query.parmas)
-			console.log(this.detailData);
+			this.getDetail()
 		},
 		methods: {
-			
+			getDetail(){
+				this.$api.get_detail({
+					article_id:this.detailData._id
+				}).then(res=>{
+					const { data } = res
+					this.detailData = data
+				})
+			}
 		}
 	}
 </script>
@@ -99,7 +112,6 @@
 				.header-box-title{
 					font-size: 16px;
 					color: #333;
-					font-weight: bold;
 				}
 				.header-box-doc{
 					font-size: 14px;
@@ -113,7 +125,11 @@
 		.detail-content{
 			margin-top:10px;
 			padding:0 15px;
-			height: 1400px;
+			min-height: 500px;
+			box-sizing: border-box;
+			.detail-content{
+				box-sizing: border-box;
+			}
 		}
 		.detail-bottom{
 			display: flex;
