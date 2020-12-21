@@ -19,6 +19,8 @@
 					<text>{{detailData.thumbs_up_count}}赞</text>
 				</view>
 			</view>
+			<button class="detail-header__follow" type="default" @click="updateFollow(detailData.author.id)">{{detailData.is_author_like?'取消关注':'关注'}}</button>
+			
 		</view>
 		<view class="detail-content">
 			<view class="detail-content__item">
@@ -44,10 +46,10 @@
 		    	</view>
 				<view class="detail-popup__content">
 					
-						<textarea class="popup__content-textarea" maxlength="200" v-model="popupCommit" fixed placeholder="请输入评论内容" />
+						<textarea class="popup__content-textarea" maxlength="200" v-model="popupCommitValue" fixed placeholder="请输入评论内容" />
 					
 					<view class="popup__content-count">
-						{{popupCommit.length}} /200
+						{{popupCommitValue.length}} /200
 					</view>
 				</view>
 		    </view>
@@ -63,9 +65,9 @@
 		},
 		data() {
 			return {
-				detailData:{},
+				detailData:{},//详情页数据
 				noData:"<p style='font-size:14px;color:#999;text-align:center;'>数据正在加载中......</p>",
-				popupCommit:''
+				popupCommitValue:''//评论内容的value值
 			}
 		},
 		onLoad(query) {
@@ -74,6 +76,7 @@
 			this.getDetail()
 		},
 		methods: {
+			
 			//点击底部输入框 
 			openCommit(){
 				this.$refs.popup.open()
@@ -84,14 +87,60 @@
 			},
 			//发布按钮
 			submit(){
-				this.$refs.popup.close()
+				if(!this.popupCommitValue) {
+					uni.showToast({
+						title:"请输入评论内容",
+						icon:'none'
+					})
+					return 
+				}
+				this.setUpdateComment(this.popupCommitValue)
 			},
+			//关注按钮
+			updateFollow(author_id){
+				
+				this.updateAuthor(author_id)
+			},
+			setUpdateComment(content){
+				uni.showLoading()
+				this.$api.update_comment({
+					article_id:this.detailData._id,
+					content
+				}).then(res=>{
+					uni.hideLoading()
+					uni.showToast({
+						title:'数据发布成功',
+						icon:'none'
+					})
+					this.close()
+					
+					
+				})
+			},
+			//是否关注作者
+			updateAuthor(author_id){
+				uni.showLoading()
+				this.$api.update_author({
+					author_id
+				}).then(res=>{
+					uni.hideLoading()
+					this.detailData.is_author_like = !this.detailData.is_author_like
+					this.getDetail()
+					console.log('detail',this.detailData);
+					uni.showToast({
+						title:this.detailData.is_author_like?'关注作者成功':'取消关注作者',
+						icon:'none'
+					})
+				})
+			},
+			//获取详情页数据
 			getDetail(){
 				this.$api.get_detail({
 					article_id:this.detailData._id
 				}).then(res=>{
 					const { data } = res
 					this.detailData = data
+					console.log(this.detailData);
 				})
 			}
 		}
@@ -146,6 +195,13 @@
 						padding-right:6px;
 					}
 				}
+			}
+			.detail-header__follow{
+				height: 30px;
+				color: #fff;
+				font-size: 12px;
+				background-color: $mk-base-color;
+				margin-right: 0;
 			}
 		}
 		.detail-content{

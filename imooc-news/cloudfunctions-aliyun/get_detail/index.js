@@ -9,13 +9,16 @@ exports.main = async (event, context) => {
 
 	//获取用户表
 	let user = await db.collection('user').doc(user_id).get()
-	let userinfo = user.data[0]
+		user = user.data[0]
 	let list = await db.collection('article')
 		.aggregate()
 		.addFields({
-			article_likes_ids: userinfo.article_likes_ids,
-			author_likes_ids: userinfo.author_likes_ids,
-			thumbs_up_article_ids: userinfo.thumbs_up_article_ids
+			// article_likes_ids: userinfo.article_likes_ids,
+			// author_likes_ids: userinfo.author_likes_ids,
+			// thumbs_up_article_ids: userinfo.thumbs_up_article_ids
+			is_author_like:$.in(['$author.id',user.author_likes_ids]),
+			is_like:$.in(['$_id',user.article_likes_ids]),
+			is_thumbs_up:$.in(['$_id',user.thumbs_up_article_ids])
 		})
 		.match({
 			_id:article_id
