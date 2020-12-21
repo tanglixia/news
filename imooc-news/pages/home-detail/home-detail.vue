@@ -34,8 +34,8 @@
 			</view>
 			<view class="detail-bottom__icons">
 				<uni-icons class="detail-bottom__icons-box" type="chat" size="22" color="#f07373"></uni-icons>
-				<uni-icons class="detail-bottom__icons-box" type="heart" size="22" color="#f07373"></uni-icons>
-				<uni-icons class="detail-bottom__icons-box" type="hand-thumbsup" size="22" color="#f07373"></uni-icons>
+				<uni-icons class="detail-bottom__icons-box" @click="isFollow(detailData._id)" :type="detailData.is_like?'heart-filled':'heart'" size="22" color="#f07373"></uni-icons>
+				<uni-icons class="detail-bottom__icons-box"@click="isThumbsup(detailData._id)" :type="detailData.is_thumbs_up?'hand-thumbsup-filled':'hand-thumbsup'" size="22" color="#f07373"></uni-icons>
 			</view>
 		</view>
 		<uni-popup ref="popup" type="bottom" :maskClick="false">
@@ -101,6 +101,16 @@
 				
 				this.updateAuthor(author_id)
 			},
+			//收藏
+			isFollow(article_id){
+				this.detailData.is_like = !this.detailData.is_like
+				this.setFollow(article_id)
+			},
+			//点赞
+			isThumbsup(article_id){
+				this.setThumbsup(article_id)
+			},
+			//评论
 			setUpdateComment(content){
 				uni.showLoading()
 				this.$api.update_comment({
@@ -131,6 +141,35 @@
 						title:this.detailData.is_author_like?'关注作者成功':'取消关注作者',
 						icon:'none'
 					})
+				})
+			},
+			//是否点击收藏
+			setFollow(article_id){
+				uni.showLoading()
+				this.$api.get_like({
+					article_id
+				}).then(res=>{
+					uni.hideLoading()
+					uni.showToast({
+						title:this.detailData.is_like ? '收藏成功':'取消收藏',
+						icon:'none'
+					})
+					console.log('收藏',res);
+				})
+			},
+			//是否点赞
+			setThumbsup(article_id){
+				uni.showLoading()
+				this.$api.update_thumbsup({
+					article_id
+				}).then(res=>{
+					uni.hideLoading()
+					this.detailData.is_thumbs_up = true
+					uni.showToast({
+						title:'您已经点过赞了',
+						icon:'none'
+					})
+					console.log('thum',res);
 				})
 			},
 			//获取详情页数据
