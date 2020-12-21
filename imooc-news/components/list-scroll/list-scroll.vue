@@ -32,10 +32,12 @@
 		flex: 1;
 		overflow: hidden;
 		box-sizing: border-box;
+		height: 100%;
 		.listScroll-content {
 			display: flex;
 			flex-direction: column;
 			height: 100%;
+			
 		}
 	}
 </style>

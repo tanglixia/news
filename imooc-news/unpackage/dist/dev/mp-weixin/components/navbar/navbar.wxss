@@ -63,7 +63,18 @@
   margin-right: 6px;
 }
 .navbar .navbar-search .navbar-search_content .navbar-search_box .navbar-search_input {
+  width: 100%;
   color: #999;
   font-size: 14px;
+}
+.navbar .navbar-search .navbar-search_content.search {
+  padding-left: 0;
+}
+.navbar .navbar-search .navbar-search_content.search .search-back {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+.navbar .navbar-search .navbar-search_content.search .navbar-search_box {
+  border-radius: 5px;
 }
 

@@ -13,7 +13,7 @@
             "path" : "pages/tabBar/follow/follow",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "关注",
                 "enablePullDownRefresh": false
             }
             

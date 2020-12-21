@@ -4,6 +4,9 @@
   "navigationBarTextStyle": "white",
   "usingComponents": {
     "navbar": "/components/navbar/navbar",
-    "tab": "/components/tab/tab"
+    "tab": "/components/tab/tab",
+    "list": "/components/list/list",
+    "list-scroll": "/components/list-scroll/list-scroll",
+    "list-card": "/components/list-card/list-card"
   }
 }
