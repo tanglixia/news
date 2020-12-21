@@ -131,7 +131,11 @@ var _default2 =
       type: Object,
       default: function _default() {
         return {};
-      } } },
+      } },
+
+    types: {
+      type: String,
+      default: '' } },
 
 
   data: function data() {
@@ -167,7 +171,8 @@ var _default2 =
           title: _this.like ? '收藏成功' : '取消收藏',
           icon: 'none' });
 
-        console.log('res', res);
+        uni.$emit('update_article', _this.types);
+        console.log('types', _this.types);
       }).catch(function () {
         uni.hideLoading();
       });

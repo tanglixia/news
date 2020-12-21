@@ -150,6 +150,8 @@
 					article_id
 				}).then(res=>{
 					uni.hideLoading()
+					// this.detailData.is_like = !this.detailData.is_like
+					uni.$emit('update_article','follow')
 					uni.showToast({
 						title:this.detailData.is_like ? '收藏成功':'取消收藏',
 						icon:'none'

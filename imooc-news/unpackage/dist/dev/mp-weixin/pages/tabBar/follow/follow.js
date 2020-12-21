@@ -96,6 +96,9 @@ var components = {
   listScroll: function() {
     return __webpack_require__.e(/*! import() | components/list-scroll/list-scroll */ "components/list-scroll/list-scroll").then(__webpack_require__.bind(null, /*! @/components/list-scroll/list-scroll.vue */ 86))
   },
+  uniLoadMore: function() {
+    return __webpack_require__.e(/*! import() | components/uni-load-more/uni-load-more */ "components/uni-load-more/uni-load-more").then(__webpack_require__.bind(null, /*! @/components/uni-load-more/uni-load-more.vue */ 100))
+  },
   listCard: function() {
     return __webpack_require__.e(/*! import() | components/list-card/list-card */ "components/list-card/list-card").then(__webpack_require__.bind(null, /*! @/components/list-card/list-card.vue */ 93))
   }
@@ -169,6 +172,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+
+
+
 {
   components: {
     listScroll: listScroll,
@@ -177,10 +183,15 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       is_active: 0, //切换文章和作者是否关注
-      followList: {} };
+      followList: [], //收藏文章数据
+      followShow: false };
 
   },
-  created: function created() {
+  onLoad: function onLoad() {var _this = this;
+    //自定义事件只能在打开的页面触发 
+    uni.$on('update_article', function () {
+      _this.getUpdateFollow();
+    });
     this.getUpdateFollow();
   },
   methods: {
@@ -190,13 +201,14 @@ __webpack_require__.r(__webpack_exports__);
     clickAuthor: function clickAuthor(value) {
       this.is_active = value;
     },
-    getUpdateFollow: function getUpdateFollow() {var _this = this;
-      uni.showLoading();
-      this.$api.get_follow().then(function (res) {
-        uni.hideLoading();var
+    getUpdateFollow: function getUpdateFollow() {var _this2 = this;
+
+      this.$api.get_follow().then(function (res) {var
+
         data = res.data;
-        _this.followList = data;
-        console.log(_this.followList);
+        _this2.followList = data;
+        _this2.followShow = _this2.followList.length === 0 ? true : false;
+        console.log(_this2.followList);
       });
     } } };exports.default = _default;
 /* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))

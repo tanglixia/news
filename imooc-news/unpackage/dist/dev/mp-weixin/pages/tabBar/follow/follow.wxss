@@ -64,7 +64,7 @@ page {
   border: 1px solid #f07373;
   border-radius: 4px;
   font-size: 14px;
-  color: #333;
+  color: #666;
 }
 .follow .follow-header .follow-header__item .follow-header__article {
   display: -webkit-box;
@@ -104,5 +104,11 @@ page {
 }
 .active {
   color: #f07373;
+}
+.no-data {
+  padding: 50px;
+  color: #999;
+  font-size: 14px;
+  text-align: center;
 }
 

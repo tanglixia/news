@@ -15,8 +15,11 @@
 			<swiper class="follow-body__swiper">
 				<swiper-item class="follow-body__swiper-item">
 					<list-scroll>
-						<list-card v-for="item in followList" :key="item._id" :item="item"></list-card>
-						
+						<uni-load-more v-if="followList.length === 0 && !this.followShow" iconType="snow" status="loading"></uni-load-more>
+						<list-card v-for="item in followList" :key="item._id" :item="item" types="follow"></list-card>
+						<view v-if="followShow" class="no-data">
+							没有数据
+						</view>
 					</list-scroll>
 				</swiper-item>
 				<swiper-item>
@@ -38,10 +41,15 @@
 		data() {
 			return {
 				is_active:0 ,//切换文章和作者是否关注
-				followList:{}
+				followList:[],//收藏文章数据
+				followShow:false
 			}
 		},
-		created() {
+		onLoad() {
+			//自定义事件只能在打开的页面触发 
+			uni.$on('update_article',()=>{	
+			this.getUpdateFollow()
+			})
 			this.getUpdateFollow()
 		},
 		methods: {
@@ -52,11 +60,12 @@
 				this.is_active =value
 			},
 			getUpdateFollow(){
-				uni.showLoading()
+				
 				this.$api.get_follow().then(res=>{
-					uni.hideLoading()
+					
 					const {data} = res
 					this.followList = data
+					this.followShow =this.followList.length === 0 ? true:false
 					console.log(this.followList);
 				})
 			}
@@ -89,7 +98,7 @@
 				border: 1px solid $mk-base-color;
 				border-radius: 4px;
 				font-size: 14px;
-				color: #333;
+				color: #666;
 				.follow-header__article{
 					display: flex;
 					align-items: center;
@@ -118,5 +127,11 @@
 	}
 	.active{
 		color: $mk-base-color;
+	}
+	.no-data{
+		padding:50px;
+		color: #999;
+		font-size: 14px;
+		text-align: center;
 	}
 </style>

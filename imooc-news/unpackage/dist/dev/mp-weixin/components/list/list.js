@@ -114,7 +114,7 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}var listItem = function listItem() {__webpack_require__.e(/*! require.ensure | components/list/list-item */ "components/list/list-item").then((function () {return resolve(__webpack_require__(/*! ./list-item.vue */ 132));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;function _toConsumableArray(arr) {return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _unsupportedIterableToArray(arr) || _nonIterableSpread();}function _nonIterableSpread() {throw new TypeError("Invalid attempt to spread non-iterable instance.\nIn order to be iterable, non-array objects must have a [Symbol.iterator]() method.");}function _unsupportedIterableToArray(o, minLen) {if (!o) return;if (typeof o === "string") return _arrayLikeToArray(o, minLen);var n = Object.prototype.toString.call(o).slice(8, -1);if (n === "Object" && o.constructor) n = o.constructor.name;if (n === "Map" || n === "Set") return Array.from(o);if (n === "Arguments" || /^(?:Ui|I)nt(?:8|16|32)(?:Clamped)?Array$/.test(n)) return _arrayLikeToArray(o, minLen);}function _iterableToArray(iter) {if (typeof Symbol !== "undefined" && Symbol.iterator in Object(iter)) return Array.from(iter);}function _arrayWithoutHoles(arr) {if (Array.isArray(arr)) return _arrayLikeToArray(arr);}function _arrayLikeToArray(arr, len) {if (len == null || len > arr.length) len = arr.length;for (var i = 0, arr2 = new Array(len); i < len; i++) {arr2[i] = arr[i];}return arr2;}var listItem = function listItem() {__webpack_require__.e(/*! require.ensure | components/list/list-item */ "components/list/list-item").then((function () {return resolve(__webpack_require__(/*! ./list-item.vue */ 132));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
 
 
 
@@ -158,9 +158,19 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
       this.$forceUpdate();
     } },
 
-  // mounted() {
-  // 	this.getList(current)
-  // },
+  //onLoad 在页面 created 组件
+  created: function created() {var _this = this;
+    //接受likes的自定义事件
+    uni.$on('update_article', function (e) {
+      console.log('e', e);
+      if (e === 'follow') {
+        _this.listCatchData = {},
+        _this.load = {},
+        _this.getList(_this.currentIndex);
+      }
+
+    });
+  },
   methods: {
     //上拉加载
     loadMore: function loadMore() {
@@ -184,7 +194,7 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
 
     },
     //请求article卡片数据
-    getList: function getList(current) {var _this = this;
+    getList: function getList(current) {var _this2 = this;
       if (!this.load[current]) {
         this.load[current] = {
           page: 1,
@@ -205,18 +215,19 @@ Object.defineProperty(exports, "__esModule", { value: true });exports.default = 
         if (data.length === 0) {
           var oldLoad = {};
           oldLoad.loading = 'noMore',
-          oldLoad.page = _this.load[current].page;
-          _this.$set(_this.load, current, oldLoad);
+          oldLoad.page = _this2.load[current].page;
+          _this2.$set(_this2.load, current, oldLoad);
           //强制渲染页面
-          _this.$forceUpdate();
+          _this2.$forceUpdate();
           return;
         }
         console.log('listRes', res);
-        var oldList = _this.listCatchData[current] || [];
+        var oldList = _this2.listCatchData[current] || [];
         oldList.push.apply(oldList, _toConsumableArray(data));
-        _this.$set(_this.listCatchData, current, oldList);
+        _this2.$set(_this2.listCatchData, current, oldList);
       });
     } } };exports.default = _default;
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(/*! ./node_modules/@dcloudio/uni-mp-weixin/dist/index.js */ 1)["default"]))
 
 /***/ }),
 

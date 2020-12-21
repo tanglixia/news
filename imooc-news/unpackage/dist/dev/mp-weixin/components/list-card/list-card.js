@@ -198,7 +198,11 @@ __webpack_require__.r(__webpack_exports__);
       type: Object,
       default: function _default() {
         return {};
-      } } },
+      } },
+
+    types: {
+      type: String,
+      default: '' } },
 
 
 

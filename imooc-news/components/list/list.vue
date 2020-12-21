@@ -42,9 +42,19 @@
 				this.$forceUpdate()
 			}
 		},
-		// mounted() {
-		// 	this.getList(current)
-		// },
+		//onLoad 在页面 created 组件
+		created() {
+			//接受likes的自定义事件
+			uni.$on('update_article',(e)=>{
+				console.log('e',e);
+				if(e === 'follow'){
+					this.listCatchData = {},
+					this.load={},
+					this.getList(this.currentIndex)
+				}
+				
+			})
+		},
 		methods: {
 			//上拉加载
 			loadMore(){

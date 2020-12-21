@@ -289,6 +289,8 @@ __webpack_require__.r(__webpack_exports__);
         article_id: article_id }).
       then(function (res) {
         uni.hideLoading();
+        // this.detailData.is_like = !this.detailData.is_like
+        uni.$emit('update_article', 'follow');
         uni.showToast({
           title: _this3.detailData.is_like ? '收藏成功' : '取消收藏',
           icon: 'none' });

@@ -6,49 +6,54 @@
 
 <script>
 	export default {
-		props:{
-			items:{
-				type:Object,
-				default(){
+		props: {
+			items: {
+				type: Object,
+				default () {
 					return {}
 				}
+			},
+			types: {
+				type: String,
+				default: ''
 			}
 		},
 		data() {
 			return {
-				like:false
+				like: false
 			};
 		},
-		watch:{
-			items(newVal){
+		watch: {
+			items(newVal) {
 				this.like = this.items.is_like
 			}
 		},
 		created() {
 			this.like = this.items.is_like
 		},
-		methods:{
+		methods: {
 			//点击爱心
-			handleLikes(){
+			handleLikes() {
 				this.getUpdateLike()
 				this.like = !this.like
 				console.log('点击收藏');
 			},
 			//请求数据
-			getUpdateLike(){
+			getUpdateLike() {
 				uni.showLoading()
 				this.$api.get_like({
-					name:'get_like',
-					user_id:'5fd4734f974b69000122157b',
-					article_id:this.items._id
-				}).then(res=>{
+					name: 'get_like',
+					user_id: '5fd4734f974b69000122157b',
+					article_id: this.items._id
+				}).then(res => {
 					uni.hideLoading(),
-					uni.showToast({
-						title:this.like?'收藏成功':'取消收藏',
-						icon:'none'
-					})
-					console.log('res',res);
-				}).catch(()=>{
+						uni.showToast({
+							title: this.like ? '收藏成功' : '取消收藏',
+							icon: 'none'
+						})
+					uni.$emit('update_article',this.types)
+					console.log('types', this.types);
+				}).catch(() => {
 					uni.hideLoading()
 				})
 			}
@@ -57,15 +62,15 @@
 </script>
 
 <style lang="scss">
-	.icons{
+	.icons {
 		position: absolute;
 		right: 0;
-		top:0;
+		top: 0;
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width:20px;
+		width: 20px;
 		height: 20px;
-		
+
 	}
 </style>
