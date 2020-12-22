@@ -101,6 +101,9 @@ var components = {
   },
   listCard: function() {
     return __webpack_require__.e(/*! import() | components/list-card/list-card */ "components/list-card/list-card").then(__webpack_require__.bind(null, /*! @/components/list-card/list-card.vue */ 93))
+  },
+  listAuthor: function() {
+    return __webpack_require__.e(/*! import() | components/list-author/list-author */ "components/list-author/list-author").then(__webpack_require__.bind(null, /*! @/components/list-author/list-author.vue */ 253))
   }
 }
 var render = function() {
@@ -140,7 +143,10 @@ __webpack_require__.r(__webpack_exports__);
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var listScroll = function listScroll() {__webpack_require__.e(/*! require.ensure | components/list-scroll/list-scroll */ "components/list-scroll/list-scroll").then((function () {return resolve(__webpack_require__(/*! @/components/list-scroll/list-scroll.vue */ 86));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var listCard = function listCard() {__webpack_require__.e(/*! require.ensure | components/list-card/list-card */ "components/list-card/list-card").then((function () {return resolve(__webpack_require__(/*! @/components/list-card/list-card.vue */ 93));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+/* WEBPACK VAR INJECTION */(function(uni) {Object.defineProperty(exports, "__esModule", { value: true });exports.default = void 0;var listScroll = function listScroll() {__webpack_require__.e(/*! require.ensure | components/list-scroll/list-scroll */ "components/list-scroll/list-scroll").then((function () {return resolve(__webpack_require__(/*! @/components/list-scroll/list-scroll.vue */ 86));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var listCard = function listCard() {__webpack_require__.e(/*! require.ensure | components/list-card/list-card */ "components/list-card/list-card").then((function () {return resolve(__webpack_require__(/*! @/components/list-card/list-card.vue */ 93));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var listAuthor = function listAuthor() {__webpack_require__.e(/*! require.ensure | components/list-author/list-author */ "components/list-author/list-author").then((function () {return resolve(__webpack_require__(/*! @/components/list-author/list-author.vue */ 253));}).bind(null, __webpack_require__)).catch(__webpack_require__.oe);};var _default =
+
+
+
 
 
 
@@ -178,11 +184,12 @@ __webpack_require__.r(__webpack_exports__);
 {
   components: {
     listScroll: listScroll,
-    listCard: listCard },
+    listCard: listCard,
+    listAuthor: listAuthor },
 
   data: function data() {
     return {
-      is_active: 0, //切换文章和作者是否关注
+      is_active: 1, //切换文章和作者是否关注
       followList: [], //收藏文章数据
       followShow: false };
 
@@ -195,6 +202,10 @@ __webpack_require__.r(__webpack_exports__);
     this.getUpdateFollow();
   },
   methods: {
+    changeTab: function changeTab(e) {
+      this.is_active = e.detail.current;
+      // console.log('followe',e);
+    },
     clickActive: function clickActive(value) {
       this.is_active = value;
     },

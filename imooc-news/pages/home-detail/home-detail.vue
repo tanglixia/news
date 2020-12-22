@@ -137,6 +137,7 @@
 					this.detailData.is_author_like = !this.detailData.is_author_like
 					this.getDetail()
 					console.log('detail',this.detailData);
+					uni.$emit('update_author')
 					uni.showToast({
 						title:this.detailData.is_author_like?'关注作者成功':'取消关注作者',
 						icon:'none'
@@ -226,11 +227,11 @@
 				flex-direction: column;
 				justify-content: space-between;
 				.header-box-title{
-					font-size: 16px;
+					font-size: 14px;
 					color: #333;
 				}
 				.header-box-doc{
-					font-size: 14px;
+					font-size: 12px;
 					color: #999;
 					text{
 						padding-right:6px;

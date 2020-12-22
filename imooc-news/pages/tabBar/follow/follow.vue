@@ -12,7 +12,7 @@
 			
 		</view>
 		<view class="follow-body">
-			<swiper class="follow-body__swiper">
+			<swiper class="follow-body__swiper" :current="this.is_active" @change="changeTab">
 				<swiper-item class="follow-body__swiper-item">
 					<list-scroll>
 						<uni-load-more v-if="followList.length === 0 && !this.followShow" iconType="snow" status="loading"></uni-load-more>
@@ -23,7 +23,9 @@
 					</list-scroll>
 				</swiper-item>
 				<swiper-item>
-					<view class="swiper-item">作者</view>
+					<list-scroll>
+						<list-author v-for="item in authorList" :key="item._id" :item="item"></list-author>
+					</list-scroll>
 				</swiper-item>
 			</swiper>
 		</view>
@@ -33,16 +35,19 @@
 <script>
 	import listScroll from '@/components/list-scroll/list-scroll.vue'
 	import listCard from '@/components/list-card/list-card.vue'
+	import listAuthor from '@/components/list-author/list-author.vue'
 	export default {
 		components:{
 			listScroll,
-			listCard
+			listCard,
+			listAuthor
 		},
 		data() {
 			return {
 				is_active:0 ,//切换文章和作者是否关注
 				followList:[],//收藏文章数据
-				followShow:false
+				followShow:false, //是否显示没有数据
+				authorList:[] //关注作者信息
 			}
 		},
 		onLoad() {
@@ -50,9 +55,17 @@
 			uni.$on('update_article',()=>{	
 			this.getUpdateFollow()
 			})
+			uni.$on('update_author',()=>{
+				this.getAuthor()
+			})
 			this.getUpdateFollow()
+			this.getAuthor()
 		},
 		methods: {
+			changeTab(e){
+				this.is_active = e.detail.current
+				// console.log('followe',e);
+			},
 			clickActive(value){
 				this.is_active =value
 			},
@@ -60,13 +73,19 @@
 				this.is_active =value
 			},
 			getUpdateFollow(){
-				
-				this.$api.get_follow().then(res=>{
-					
+				this.$api.get_follow().then(res=>{	
 					const {data} = res
 					this.followList = data
 					this.followShow =this.followList.length === 0 ? true:false
 					console.log(this.followList);
+				})
+			},
+			//获取作者信息
+			getAuthor(){
+				this.$api.get_author().then(res=>{
+					const {data} = res
+					this.authorList = data
+					
 				})
 			}
 		}

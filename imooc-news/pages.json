@@ -3,7 +3,7 @@
 		{
 			"path": "pages/tabBar/index/index",
 			"style": {
-				"navigationBarTitleText": "uni-app",
+				"navigationBarTitleText": "",
 				"navigationStyle":"custom",
 				"navigationBarTextStyle":"white"
 			}
@@ -22,7 +22,7 @@
             "path" : "pages/tabBar/my/my",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "我的",
                 "enablePullDownRefresh": false
             }
             
@@ -31,7 +31,7 @@
             "path" : "pages/home-search/home-search",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "uni-app",
+                "navigationBarTitleText": "搜索",
                 "navigationStyle":"custom",
                 "navigationBarTextStyle":"white",
                 "enablePullDownRefresh": false
@@ -51,7 +51,16 @@
             "path" : "pages/home-detail/home-detail",
             "style" :                                                                                    
             {
-                "navigationBarTitleText": "",
+                "navigationBarTitleText": "卡片详情",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/my-article/my-article",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "我的文章",
                 "enablePullDownRefresh": false
             }
             
