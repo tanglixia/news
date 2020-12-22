@@ -57,10 +57,19 @@
             
         }
         ,{
-            "path" : "pages/my-article/my-article",
+            "path" : "pages/tabBar/my-article/my-article",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "我的文章",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+        ,{
+            "path" : "pages/tabBar/feedback/feedback",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "",
                 "enablePullDownRefresh": false
             }
             

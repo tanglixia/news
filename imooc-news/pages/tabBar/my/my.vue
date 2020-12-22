@@ -37,7 +37,7 @@
 				<uni-icons type="forward" size="18"></uni-icons>
 			</view>
 		</view>
-		<view class="my-header__opinion">
+		<view class="my-header__opinion" @click="feedback">
 			<view class="my-header__opinion-left">
 				<uni-icons class="opinion-left__icons" type="plus" size="18"></uni-icons>
 				<text>意见反馈</text>
@@ -66,7 +66,12 @@
 			//我的文章页面
 			myArticle(){
 				uni.navigateTo({
-					url:'/pages/my-article/my-article'
+					url:'../my-article/my-article'
+				})
+			},
+			feedback(){
+				uni.navigateTo({
+					url:'../feedback/feedback'
 				})
 			}
 		}
