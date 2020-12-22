@@ -1,6 +1,7 @@
 <template>
 	<view>
-		我的文章
+		<uni-load-more v-if="this.ArticleList.length === 0" status="loading"></uni-load-more>
+		<list-card v-for="item in ArticleList" :item=item :key="item._id" ></list-card>
 	</view>
 </template>
 
@@ -8,11 +9,20 @@
 	export default {
 		data() {
 			return {
-				
+				ArticleList:[]
 			}
 		},
+		created() {
+			this.getMyActive()
+		},
 		methods: {
-			
+			getMyActive(){
+				this.$api.get_my_article()
+				.then(res=>{
+					const {data} = res
+					this.ArticleList = data
+				})
+			}
 		}
 	}
 </script>
